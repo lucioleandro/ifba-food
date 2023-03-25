@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: db_mysql_dev
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: ifbafood-pagamento
+      MYSQL_ROOT_PASSWORD: ativ$$webmb
+    networks:
+      - dev
+    volumes:
+      - db-mysql-dev:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3.10-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./dados:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=ativ$$webmb
+    networks:
+      - dev
+
+volumes:
+  db-mysql-dev:
+
+networks:
+  dev:
+    driver: bridge
