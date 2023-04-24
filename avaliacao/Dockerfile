@@ -1,4 +1,5 @@
-FROM openjdk:17-alpine
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY target/avaliacao-0.0.1-SNAPSHOT.jar /app/avaliacao.jar
-CMD ["java", "-jar", "avaliacao.jar"]
+EXPOSE 0
+ENTRYPOINT  ["java", "-jar", "/app/avaliacao.jar"]
