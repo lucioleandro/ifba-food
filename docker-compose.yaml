@@ -1,0 +1,86 @@
+version: '3.1'
+
+services:
+  discovery-server:
+    build:
+      context: ./discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - discovery-server
+      - pagamentos
+      - avaliacao
+      - pedidos
+  pagamentos:
+    build:
+      context: ./pagamentos
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    environment:
+      MYSQL_HOST: database
+      MYSQL_DATABASE: pagamentos
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    depends_on:
+      - database
+  avaliacao:
+    build:
+      context: ./avaliacao
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    environment:
+      MYSQL_HOST: database
+      MYSQL_DATABASE: avaliacao
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    depends_on:
+      - database
+  pedidos:
+    build:
+      context: ./pedidos
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8080"
+    environment:
+      MYSQL_HOST: database
+      MYSQL_DATABASE: pedidos
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    depends_on:
+      - database
+  database:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ifbafood
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    
+  rabbitmq:
+    image: rabbitmq:3.10-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./dados:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=ativ$$webmb
+    networks:
+      - dev
+
+networks:
+  dev:
+    driver: bridge
