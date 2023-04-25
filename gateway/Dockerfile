@@ -1,5 +1,30 @@
 FROM openjdk:17-jdk-slim
+
+# Set the working directory inside the container
 WORKDIR /app
-COPY target/gateway-0.0.1-SNAPSHOT.jar /app/gateway.jar
+
+# Copy the Gradle wrapper from your project into the container
+COPY gradlew .
+COPY gradle gradle
+
+# Grant execution permission to the Gradle wrapper script
+RUN chmod +x ./gradlew
+
+# Copy your source code into the container
+COPY src src
+COPY build.gradle settings.gradle ./
+
+# Run the Gradle build
+RUN ./gradlew clean build -x test
+
+# Start with a new stage to reduce the image size
+FROM openjdk:17-jdk-slim
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the built JAR file from the previous stage
+COPY --from=0 /app/build/libs/*.jar app.jar
+
 EXPOSE 8082
-ENTRYPOINT  ["java", "-jar", "/app/gateway.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
