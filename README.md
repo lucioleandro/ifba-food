@@ -114,16 +114,7 @@ curl --location 'http://localhost:8082/pagamentos-ms/pagamentos' \
 
 ````
 curl --location --request PATCH 'http://localhost:8082/pagamentos-ms/pagamentos/1/confirmar' \
---header 'Content-Type: application/json' \
---data '{
-    "valor": 900,
-    "nome": "Renato",
-    "numero": "12345678",
-    "expiracao": "10/29",
-    "codigo": "123",
-    "pedidoId": 1,
-    "formaDePagamentoId": 1,
-    "status": "CRIADO"
+--data ''
 }'
 ````
 
