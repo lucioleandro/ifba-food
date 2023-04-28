@@ -16,23 +16,28 @@ Ir para a raiz do projeto e executar:
 ```
 docker-compose up -d
 ```
+mais recomendamos fortemente usar:
+
+````
+docker-compose build --no-cache && docker-compose up -d
+````
 O arquivo docker-compose.yml acima define uma série de serviços, redes e volumes para criar um ambiente de desenvolvimento para um sistema de microserviços. Vamos analisar cada serviço, rede e volume:
 
-discovery-server: Este serviço é responsável por construir e executar o servidor de descoberta (geralmente usado para a comunicação entre microserviços). Ele expõe a porta 8081 e faz parte da rede "dev".
+**discovery-server**: Este serviço é responsável por construir e executar o servidor de descoberta (geralmente usado para a comunicação entre microserviços). Ele expõe a porta 8081 e faz parte da rede "dev".
 
-gateway: Este serviço atua como um gateway para os microserviços. Ele se conecta ao servidor de descoberta e depende de outros serviços como pagamentos, avaliação e pedidos. Ele expõe a porta 8082 e também faz parte da rede "dev".
+**gateway**: Este serviço atua como um gateway para os microserviços. Ele se conecta ao servidor de descoberta e depende de outros serviços como pagamentos, avaliação e pedidos. Ele expõe a porta 8082 e também faz parte da rede "dev".
 
-pagamentos: Este é o serviço de pagamentos que se conecta ao banco de dados de pagamentos (database-pagamentos) e ao servidor de descoberta. Ele também se conecta ao serviço RabbitMQ para mensagens e faz parte da rede "dev". Um volume chamado mysql-data é montado para persistir os dados do MySQL.
+**pagamentos**: Este é o serviço de pagamentos que se conecta ao banco de dados de pagamentos (database-pagamentos) e ao servidor de descoberta. Ele também se conecta ao serviço RabbitMQ para mensagens e faz parte da rede "dev". Um volume chamado mysql-data é montado para persistir os dados do MySQL.
 
-avaliacao: Este serviço é responsável pela avaliação e se conecta ao servidor de descoberta e ao RabbitMQ. Ele faz parte da rede "dev".
+**avaliacao**: Este serviço é responsável pela avaliação e se conecta ao servidor de descoberta e ao RabbitMQ. Ele faz parte da rede "dev".
 
-pedidos: Este serviço gerencia pedidos e se conecta ao banco de dados de pedidos (database-pedidos), ao servidor de descoberta e ao RabbitMQ. Ele faz parte da rede "dev" e monta um volume chamado postgres-data para persistir os dados do PostgreSQL.
+**pedidos**: Este serviço gerencia pedidos e se conecta ao banco de dados de pedidos (database-pedidos), ao servidor de descoberta e ao RabbitMQ. Ele faz parte da rede "dev" e monta um volume chamado postgres-data para persistir os dados do PostgreSQL.
 
-database-pagamentos: Este serviço é um banco de dados MySQL para armazenar informações de pagamento. Ele expõe a porta 3306 e faz parte da rede "dev".
+**database-pagamentos**: Este serviço é um banco de dados MySQL para armazenar informações de pagamento. Ele expõe a porta 3306 e faz parte da rede "dev".
 
-database-pedidos: Este serviço é um banco de dados PostgreSQL para armazenar informações de pedidos. Ele expõe a porta 5432 e faz parte da rede "dev".
+**database-pedidos**: Este serviço é um banco de dados PostgreSQL para armazenar informações de pedidos. Ele expõe a porta 5432 e faz parte da rede "dev".
 
-rabbitmq: Este serviço é um servidor RabbitMQ para gerenciamento de mensagens entre os microserviços. Ele expõe as portas 5672 e 15672, e faz parte da rede "dev". Um volume chamado dados é montado para persistir os dados do RabbitMQ.
+**rabbitmq**: Este serviço é um servidor RabbitMQ para gerenciamento de mensagens entre os microserviços. Ele expõe as portas 5672 e 15672, e faz parte da rede "dev". Um volume chamado dados é montado para persistir os dados do RabbitMQ.
 
 Além disso, o arquivo define duas redes, "dev" e uma ponte de driver, e dois volumes chamados "mysql-data" e "postgres-data" para persistência de dados. Os serviços são configurados para reiniciar em caso de falha (restart: on-failure).
 
