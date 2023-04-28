@@ -73,11 +73,11 @@ curl --location 'http://localhost:8082/pedidos-ms/pedidos' \
     "itens": [
     {
         "quantidade": 10,
-        "descrição": "Coca-cola"
+        "descricao": "Coca-cola"
     },
     {
         "quantidade": 5,
-        "descrição": "Mc Chicken"
+        "descricao": "Mc Chicken"
     }
     ]
 }'
