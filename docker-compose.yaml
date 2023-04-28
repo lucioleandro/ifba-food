@@ -54,6 +54,8 @@ services:
       - discovery-server
     networks:
       - dev
+    volumes:
+      - mysql-data:/var/lib/mysql  
     restart: on-failure  
   avaliacao:
     build:
@@ -95,6 +97,8 @@ services:
       - discovery-server
     networks:
       - dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  
     restart: on-failure
   database-pagamentos:
     image: mysql:8.0
@@ -143,3 +147,6 @@ services:
 networks:
   dev:
     driver: bridge
+volumes:
+  mysql-data:
+  postgres-data:    
