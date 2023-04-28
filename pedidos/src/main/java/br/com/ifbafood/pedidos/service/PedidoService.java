@@ -5,12 +5,12 @@ import br.com.ifbafood.pedidos.dto.StatusDto;
 import br.com.ifbafood.pedidos.model.Pedido;
 import br.com.ifbafood.pedidos.model.Status;
 import br.com.ifbafood.pedidos.repository.PedidoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,7 +1,10 @@
 package br.com.ifbafood.pedidos.dto;
 
 import br.com.ifbafood.pedidos.model.Status;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-CREATE TABLE pedidos (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  data_hora datetime NOT NULL,
-  status varchar(255) NOT NULL,
-  PRIMARY KEY (id)
-)
+CREATE TABLE pedidos
+(
+    id        SERIAL PRIMARY KEY,
+    data_hora TIMESTAMP    NOT NULL,
+    status    VARCHAR(255) NOT NULL
+);
